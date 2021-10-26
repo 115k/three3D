@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div id="container">大爷大爷啊啊啊</div>
+    <div id="container"></div>
     <div id="menu">
       <button id="table">TABLE</button>
       <button id="sphere">SPHERE</button>
@@ -12,7 +12,6 @@
 
 <script>
 import * as THREE from "three";
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls.js";
 import {
@@ -21,6 +20,7 @@ import {
 } from "three/examples/jsm/renderers/CSS3DRenderer.js";
 let camera, scene, renderer, controls;
 const objects = [];
+let root;
 const targets = { table: [], sphere: [], helix: [], grid: [] };
 const table = [
   "H",
@@ -631,6 +631,8 @@ export default {
       camera.position.z = 3000;
 
       scene = new THREE.Scene();
+      root = new THREE.Object3D();
+      scene.add(root);
 
       // table
 
@@ -659,7 +661,8 @@ export default {
         objectCSS.position.x = Math.random() * 4000 - 2000;
         objectCSS.position.y = Math.random() * 4000 - 2000;
         objectCSS.position.z = Math.random() * 4000 - 2000;
-        scene.add(objectCSS);
+        // scene.add(objectCSS);
+        root.add(objectCSS);
 
         objects.push(objectCSS);
 
@@ -749,9 +752,10 @@ export default {
       requestAnimationFrame(this.animate);
       TWEEN.update();
       controls.update();
-      // const time = Date.now() * 0.0004;
+      const time = Date.now() * 0.0004;
       // root.rotation.x = time;
-      // root.rotation.y = time * 0.7;
+      root.rotation.y = time * 0.7; // 只围绕Y轴旋转
+      this.render();
     },
     onWindowResize() {
       camera.aspect = window.innerWidth / window.innerHeight;
