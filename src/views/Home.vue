@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// 新增1111
 import * as THREE from "three";
 import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls.js";
